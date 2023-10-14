@@ -1,0 +1,123 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+interface Expression {
++ {abstract} calculate() : DualNumber
++ {abstract} prettyPrint()
+}
+
+class Main{
++ {static} main(String[] args)
+}
+
+class Constant implements Expression {
+- value : double
+--
++ calculate(DualNumber dn) : double
++ prettyPrint()
+}
+
+class X implements Expression {
++ X()
++ calculate(DualNumber dn) : DualNumber
++ prettyPrint()
+}
+
+class DualNumber implements Expression {
+- u : double
+- uprime : double
+--
++ DualNumber(u : double, uprime : double)
++ calculate(DualNumber dn) : double
++ prettyPrint()
+}
+
+class Log implements Expression {
+- value : double
+--
++ Log()
++ calculate(DualNumber dn) : double
++ prettyPrint()
+}
+
+class Tan implements Expression {
+- expr : Expression
+--
++ Tan(Expression expr)
++ calculate(DualNumber dn) : DualNumber
++ prettyPrint()
+}
+
+class Cos implements Expression {
+- func : Expression
+--
++ Cos(Expression func)
++ calculate(DualNumber dn) : DualNumber
++ prettyPrint()
+}
+
+class Sin implements Expression {
+- expr : Expression
+--
++ Sin(Expression func)
++ calculate(DualNumber dn) : DualNumber
++ prettyPrint()
+}
+
+
+abstract BinaryOperator implements Expression {
+# left : Expression
+# right : Expression
++ BinaryOperator(leftOperand : Expresion, rightOperand : Expresion)
++ calculate(DualNumber dn) : DualNumber
++ prettyPrint(Expression e)
+--
+BinaryOperator(left, right : Expression)
+}
+
+BinaryOperator *--> Expression : "2 left, right"
+
+
+class Add extends BinaryOperator {
+--
++ calculate() : DualNumber
++ prettyPrint()
+}
+
+
+class Multiply extends BinaryOperator {
++ Multiply(Expression expr1, Expression expr2)
++ calculate(DualNumber dn) : DualNumber
++ prettyPrint()
+}
+
+
+class Subtract extends BinaryOperator {
+--
++ Subtract(Expression expr1, Expression expr2)
++ calculate(DualNumber dn) : DualNumber
++ prettyPrint()
+}
+
+class Square extends BinaryOperator{
+--
++ Square(Expression expr1)
++ calculate(DualNumber dn) : DualNumber
++ prettyPrint()
+}
+
+class Power extends BinaryOperator{
+--
++ Power(Expression expr1, Expression expr2)
++ calculate(DualNumber dn) : DualNumber
++ prettyPrint()
+}
+
+class Division extends BinaryOperator {
+--
++ Division(Expression expr1, Expression expr2)
++ calculate(DualNumber dn)
++ prettyPrint()
+}
+
+@enduml
